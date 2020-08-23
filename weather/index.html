@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Thời tiết</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style type="text/css">
+	#khung{
+		width: 60%;
+		height: auto;
+		margin: 0 auto;
+		border: 3px dotted blue;
+		padding: 20px;
+		margin-top: 15px;
+	}
+</style>
+<body>
+<div id="khung">
+	<div class="noidung">
+		<h5>Chưa có gì...</h5>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	let xhr = new XMLHttpRequest();
+
+	xhr.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=turan&appid=f20469a6a6f26d3477a5259df3e44f68');
+
+	xhr.onreadystatechange = function(){
+		if(this.readyState==4 && this.status==200){
+			let data = JSON.parse(this.responseText);
+			document.querySelector('.noidung').innerHTML = '<ul class="list-group"><li class="list-group-item active">Thời tiết Đà Nẵng</li><li class="list-group-item">Kinh độ: '+data.coord.lon+' || Vĩ độ: '+data.coord.lat+'</li><li class="list-group-item">Trạng thái: '+data.weather[0].main+'</li><li class="list-group-item">Mô tả: '+data.weather[0].description+'</li><li class="list-group-item">Nhiệt độ: '+(data.main.temp-273.15)+' C</li><li class="list-group-item">Nhiệt độ cơ thể: '+(data.main.feels_like-273.15)+' C</li><li class="list-group-item">Áp suất khí quyển: '+data.main.pressure+'</li><li class="list-group-item">Độ ẩm: '+data.main.humidity+' %</li><li class="list-group-item">Nhiệt độ tối thiểu: '+(data.main.temp_min-273.15)+' C</li><li class="list-group-item">Nhiệt độ tối đa: '+(data.main.temp_max-273.15)+' C</li><li class="list-group-item">Tốc độ gió: '+data.wind.speed+'</li></ul>';
+		}
+	}
+
+	xhr.send();
+</script>
+</html>
